@@ -20,7 +20,7 @@ class Game : ApplicationAdapter() {
     private var playerX: Float = 1.5f
     private var playerY: Float = 1.5f
     private var playerA: Float = 0f
-    private val fov = PI.toFloat() / 4f
+    private var fov = PI.toFloat() / 4f
 
     private var t1 = System.currentTimeMillis()
     private var t2 = System.currentTimeMillis()
@@ -82,6 +82,8 @@ class Game : ApplicationAdapter() {
             println("x:$playerX, y:$playerY")
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) fov += .05f
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) fov -= .05f
         if (Gdx.input.isKeyPressed(Input.Keys.A)) playerA -= .001f * elapsed
         if (Gdx.input.isKeyPressed(Input.Keys.D)) playerA += .001f * elapsed
     }
