@@ -55,7 +55,38 @@ class Game : ApplicationAdapter() {
         t1 = t2
 
         doMovements()
+        doRayTracing()
 
+        graphics.render()
+    }
+
+
+    private fun doMovements() {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            val futureX = playerX + cos(playerA) * .004f * elapsed
+            val futureY = playerY + sin(playerA) * .004f * elapsed
+            if (map[futureY.toInt()][futureX.toInt()] != '#') {
+                playerX = futureX
+                playerY = futureY
+            }
+            println("x:$playerX, y:$playerY")
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            val futureX = playerX - cos(playerA) * .004f * elapsed
+            val futureY = playerY - sin(playerA) * .004f * elapsed
+            if (map[futureY.toInt()][futureX.toInt()] != '#') {
+                playerX = futureX
+                playerY = futureY
+            }
+            println("x:$playerX, y:$playerY")
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) playerA -= .001f * elapsed
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) playerA += .001f * elapsed
+    }
+
+    private fun doRayTracing() {
         var rayAngle = playerA - fov / 2
         val angleStep = fov / IMG_WIDTH
         for (x in 0 until IMG_WIDTH) {
@@ -105,33 +136,6 @@ class Game : ApplicationAdapter() {
 
             rayAngle += angleStep
         }
-        graphics.render()
-    }
-
-
-    private fun doMovements() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            val futureX = playerX + cos(playerA) * .004f * elapsed
-            val futureY = playerY + sin(playerA) * .004f * elapsed
-            if (map[futureY.toInt()][futureX.toInt()] != '#') {
-                playerX = futureX
-                playerY = futureY
-            }
-            println("x:$playerX, y:$playerY")
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            val futureX = playerX - cos(playerA) * .004f * elapsed
-            val futureY = playerY - sin(playerA) * .004f * elapsed
-            if (map[futureY.toInt()][futureX.toInt()] != '#') {
-                playerX = futureX
-                playerY = futureY
-            }
-            println("x:$playerX, y:$playerY")
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) playerA -= .001f * elapsed
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) playerA += .001f * elapsed
     }
 
     override fun dispose() {
